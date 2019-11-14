@@ -9,9 +9,19 @@ namespace TicTacToe.Pages
 {
     public class IndexModel : PageModel
     {
+        public Game Game { get; set; }
         public void OnGet()
         {
-
+            Game = new Game();
+        }
+        public void OnPost(string state, int cx, int cy, int sx, int sy)
+        {
+            Game = Game.Marshal(state);
+            Checker checker = Game.Board[cx, cy];
+            checker.Coords.x = sx;
+            checker.Coords.y = sy;
+            Game.Board[cx, cy] = null;
+            Game.Board[sx, sy] = checker;
         }
     }
 }
